@@ -1,0 +1,20 @@
+version: "3.1"
+services:
+    webserver:
+      image: httpd
+      container_name: apache-webserver
+      working_dir: /usr/local/apache2/htdocs
+      volumes:
+          - .:/usr/local/apache2/htdocs
+      ports:
+       - "8000:80"
+      volumes:
+       - ./configs/httpd.conf:/usr/local/apache2/conf/httpd.conf
+       - ./sources:/usr/local/apache2/htdocs
+    
+    php-fpm:
+      build: images/php-fpm
+      container_name: apache-php-fpm
+      working_dir: /usr/local/apache2/htdocs
+      volumes:
+        - ./sources:/usr/local/apache2/htdocs
